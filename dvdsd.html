@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b2e">
+<title>ميلو الإسلامي | المحادثة</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --green:#174b39;
+  --dark:#103628;
+  --gold:#b99a60;
+  --bg:#f7f8f6;
+  --border:#e8ece8;
+  --text:#202b25;
+  --muted:#89928b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Tajawal",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100dvh;
+}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.app{
+  display:flex;
+  flex-direction:column;
+  height:100dvh;
+  max-width:1250px;
+  margin:auto;
+  background:#fff;
+  overflow:hidden;
+}
+.header{
+  height:76px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  border-bottom:1px solid var(--border);
+  background:#fff;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:45px;height:45px;
+  display:grid;place-items:center;
+  border-radius:14px;
+  background:var(--dark);
+  color:#e6d3a8;
+  font-size:25px;
+}
+.brand-name{
+  font-weight:900;font-size:21px;
+  color:var(--dark);
+}
+.brand-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.header-status{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:#69766d;
+  background:#f6f8f5;
+  border:1px solid #edf0eb;
+  border-radius:30px;padding:9px 13px;
+}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.chat{
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:900px;
+  margin:auto;
+}
+.chat-title{
+  text-align:center;
+  padding:26px 20px 20px;
+}
+.chat-title h1{
+  margin:0;
+  font-size:23px;
+  font-weight:900;
+  color:var(--dark);
+}
+.chat-title p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+.gold-line{
+  width:38px;height:3px;
+  background:var(--gold);
+  border-radius:3px;
+  margin:16px auto 0;
+}
+.messages{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:15px 28px 25px;
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+  scroll-behavior:smooth;
+}
+.welcome{
+  margin:auto;
+  text-align:center;
+  max-width:420px;
+  padding:30px 15px;
+}
+.welcome-logo{
+  width:64px;height:64px;
+  border-radius:21px;
+  background:#edf4ef;
+  color:var(--green);
+  display:grid;place-items:center;
+  margin:0 auto 19px;
+  font-size:30px;
+}
+.welcome h2{
+  font-size:21px;
+  margin:0 0 10px;
+  color:var(--dark);
+}
+.welcome p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:2;
+  margin:0;
+}
+.message{
+  display:flex;
+  gap:11px;
+  max-width:88%;
+  align-items:flex-start;
+}
+.message.user{align-self:flex-start;flex-direction:row-reverse}
+.message.assistant{align-self:flex-end}
+.avatar{
+  width:36px;height:36px;
+  flex-shrink:0;
+  display:grid;place-items:center;
+  border-radius:12px;
+  font-weight:800;
+  font-size:13px;
+}
+.assistant .avatar{background:var(--dark);color:#e6d3a8}
+.user .avatar{background:#f4ecdc;color:#8b713e}
+.bubble{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-size:14px;
+  line-height:2;
+  padding:13px 17px;
+  border-radius:16px;
+}
+.assistant .bubble{
+  background:#f7f9f7;
+  border:1px solid #edf0ed;
+  border-top-right-radius:4px;
+}
+.user .bubble{
+  background:var(--green);
+  color:#fff;
+  border-top-left-radius:4px;
+}
+.typing{
+  display:flex;gap:5px;padding:7px 2px;
+}
+.typing span{
+  width:6px;height:6px;border-radius:50%;
+  background:#769080;
+  animation:pulse .8s infinite alternate;
+}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes pulse{
+  from{opacity:.3;transform:translateY(0)}
+  to{opacity:1;transform:translateY(-4px)}
+}
+.composer-area{
+  flex-shrink:0;
+  padding:16px 25px 13px;
+  border-top:1px solid var(--border);
+  background:#fff;
+}
+.composer{
+  max-width:850px;
+  margin:auto;
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  border:1px solid #dfe6df;
+  border-radius:18px;
+  padding:9px;
+  background:#fff;
+  transition:.2s;
+}
+.composer:focus-within{
+  border-color:#9bb9a5;
+  box-shadow:0 0 0 4px #174b3909;
+}
+textarea{
+  flex:1;
+  min-width:0;
+  min-height:45px;
+  max-height:160px;
+  resize:none;
+  border:0;
+  outline:none;
+  padding:11px 10px;
+  line-height:1.8;
+  color:var(--text);
+  background:transparent;
+  font-size:14px;
+}
+textarea::placeholder{color:#a0a9a2}
+.send{
+  width:46px;height:46px;
+  border:0;border-radius:13px;
+  background:var(--green);
+  color:white;font-size:20px;
+  display:grid;place-items:center;
+  flex-shrink:0;
+  transition:.2s;
+}
+.send:hover{background:var(--dark)}
+.send:disabled{opacity:.5;cursor:not-allowed}
+.hint{
+  text-align:center;
+  font-size:11px;
+  color:#9aa19b;
+  margin:10px 0 0;
+  line-height:1.8;
+}
+.footer{
+  flex-shrink:0;
+  text-align:center;
+  padding:0 12px 13px;
+  font-size:11px;
+  color:#9aa19b;
+}
+@media(min-width:1260px){
+  body{padding:0 18px;background:#f0f3ef}
+  .app{box-shadow:0 0 55px #173e2a0b}
+}
+@media(max-width:650px){
+  .header{height:66px;padding:0 14px}
+  .logo{width:40px;height:40px;border-radius:12px}
+  .brand-name{font-size:18px}
+  .brand-sub{font-size:11px}
+  .header-status{padding:8px 9px;font-size:10px;gap:6px}
+  .chat-title{padding:20px 14px 15px}
+  .chat-title h1{font-size:20px}
+  .chat-title p{font-size:12px}
+  .messages{padding:12px 12px 20px;gap:17px}
+  .message{max-width:96%;gap:7px}
+  .avatar{width:30px;height:30px;border-radius:10px;font-size:11px}
+  .bubble{font-size:13px;padding:10px 12px}
+  .composer-area{padding:11px 10px 9px}
+  .composer{border-radius:15px;padding:7px;gap:6px}
+  textarea{font-size:14px;padding:10px 7px;min-height:42px}
+  .send{width:43px;height:43px;border-radius:12px}
+  .hint{font-size:10px;margin-top:8px}
+  .footer{padding-bottom:max(10px,env(safe-area-inset-bottom))}
+  .welcome h2{font-size:19px}
+  .welcome p{font-size:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="logo">۞</div>
+      <div>
+        <div class="brand-name">ميلو الإسلامي</div>
+        <div class="brand-sub">مساعدك للمعرفة الإسلامية</div>
+      </div>
+    </div>
+    <div class="header-status">
+      <span class="status-dot"></span>
+      <span id="status">جاهز للمحادثة</span>
+    </div>
+  </header>
+
+  <main class="chat">
+    <div class="chat-title">
+      <h1>المحادثة</h1>
+      <p>اسأل عمّا تريد، وسأساعدك بما أستطيع مع الحرص على دقة المعلومات.</p>
+      <div class="gold-line"></div>
+    </div>
+
+    <section class="messages" id="messages" aria-live="polite">
+      <div class="welcome" id="welcome">
+        <div class="welcome-logo">۞</div>
+        <h2>أهلًا بك في ميلو</h2>
+        <p>ابدأ محادثتك بكتابة سؤالك في الأسفل.<br>أنا هنا لمساعدتك في التعلّم والمعرفة الإسلامية.</p>
+      </div>
+    </section>
+
+    <div class="composer-area">
+      <div class="composer">
+        <textarea id="question" rows="1" maxlength="8000"
+          placeholder="اكتب رسالتك هنا..."
+          aria-label="اكتب رسالتك"></textarea>
+        <button class="send" id="send" aria-label="إرسال الرسالة" title="إرسال">➤</button>
+      </div>
+      <p class="hint">قد يخطئ الذكاء الاصطناعي؛ تحقّق من المسائل الشرعية من مصادرها المعتمدة.</p>
+    </div>
+  </main>
+
+  <footer class="footer">ميلو الإسلامي · تجربة عربية بسيطة وأنيقة</footer>
+</div>
+
+<script>
+  // ضع مفتاح Groq الخاص بك هنا.
+  // لا تنشر هذا الملف علنًا وهو يحتوي على المفتاح.
+  const GROQ_API_KEY = "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";
+  const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+  const MODEL = "openai/gpt-oss-120b";
+
+  const SYSTEM_PROMPT = `
+أنت ميلو الإسلامي، مساعد عربي محترم للمعرفة الإسلامية.
+أجب بلغة عربية واضحة ومنظمة وبأسلوب هادئ.
+لا تختلق آيات قرآنية أو أحاديث أو مصادر أو أرقامًا.
+لا تجزم بصحة حديث أو حكم شرعي إذا لم تكن متأكدًا.
+ميّز بين النص الشرعي وشرحه والرأي.
+إذا لم تعرف، فقل إنك لا تعرف بدل التخمين.
+في الفتاوى والمسائل الخلافية، وضّح حدود معرفتك وأوصِ بالرجوع إلى عالم موثوق عند الحاجة.
+لا تدّعِ أنك عالم أو مفتٍ، ولا تعرض إجابتك على أنها فتوى ملزمة.
+لا تزعم أنك تحققت من مصدر مباشر إذا لم تفعل.
+`;
+
+  const $ = (s) => document.querySelector(s);
+  const messagesEl = $("#messages");
+  const input = $("#question");
+  const sendBtn = $("#send");
+  const statusEl = $("#status");
+
+  let busy = false;
+  let conversation = [];
+
+  function addMessage(role, content) {
+    $("#welcome")?.remove();
+
+    const row = document.createElement("div");
+    row.className = "message " + role;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "user" ? "أنت" : "۞";
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = content;
+
+    row.append(avatar, bubble);
+    messagesEl.appendChild(row);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return row;
+  }
+
+  function showTyping() {
+    const row = addMessage("assistant", "");
+    row.id = "typing";
+    const bubble = row.querySelector(".bubble");
+    bubble.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  }
+
+  function showWelcome() {
+    messagesEl.innerHTML = `
+      <div class="welcome" id="welcome">
+        <div class="welcome-logo">۞</div>
+        <h2>أهلًا بك في ميلو</h2>
+        <p>ابدأ محادثتك بكتابة سؤالك في الأسفل.<br>أنا هنا لمساعدتك في التعلّم والمعرفة الإسلامية.</p>
+      </div>`;
+  }
+
+  async function sendMessage() {
+    if (busy) return;
+    const text = input.value.trim();
+    if (!text) {
+      input.focus();
+      return;
+    }
+
+    if (!GROQ_API_KEY || GROQ_API_KEY === "ضع_مفتاح_Groq_هنا") {
+      addMessage("assistant", "أضف مفتاح Groq داخل الكود في المتغير GROQ_API_KEY أولًا.");
+      statusEl.textContent = "المفتاح غير مضاف";
+      return;
+    }
+
+    busy = true;
+    sendBtn.disabled = true;
+    input.disabled = true;
+    statusEl.textContent = "جارٍ الرد...";
+    input.value = "";
+    input.style.height = "auto";
+
+    conversation.push({ role: "user", content: text });
+    addMessage("user", text);
+    showTyping();
+
+    try {
+      const response = await fetch(GROQ_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + GROQ_API_KEY
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [
+            { role: "system", content: SYSTEM_PROMPT },
+            ...conversation.slice(-20)
+          ],
+          temperature: 0.3,
+          max_completion_tokens: 1800
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data?.error?.message || ("HTTP " + response.status));
+      }
+
+      const answer = data?.choices?.[0]?.message?.content;
+      if (typeof answer !== "string" || !answer.trim()) {
+        throw new Error("لم تصل إجابة من الخدمة.");
+      }
+
+      $("#typing")?.remove();
+      conversation.push({ role: "assistant", content: answer.trim() });
+      addMessage("assistant", answer.trim());
+      statusEl.textContent = "اكتمل الرد";
+
+    } catch (error) {
+      $("#typing")?.remove();
+      const msg = String(error?.message || "");
+      let friendly = "تعذر الاتصال بالخدمة. تحقق من الإنترنت وحاول مرة أخرى.";
+
+      if (msg.includes("401")) friendly = "مفتاح Groq غير صحيح أو غير صالح.";
+      else if (msg.includes("403")) friendly = "الخدمة رفضت الطلب. تحقق من صلاحيات المفتاح.";
+      else if (msg.includes("404")) friendly = "النموذج غير متاح أو اسم النموذج غير صحيح. راجع النماذج المتاحة في حساب Groq.";
+      else if (msg.includes("429")) friendly = "تجاوزت حد الطلبات مؤقتًا. انتظر قليلًا ثم أعد المحاولة.";
+      else if (msg.includes("Failed to fetch")) friendly = "تعذر الوصول إلى Groq. قد تحتاج إلى خادم وسيط إذا استمرت المشكلة.";
+      
+      addMessage("assistant", friendly);
+      statusEl.textContent = "تعذر إكمال الرد";
+      console.error(error);
+    } finally {
+      busy = false;
+      sendBtn.disabled = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
+  input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 160) + "px";
+  });
+</script>
+</body>
+</html>
